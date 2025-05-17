@@ -1,1 +1,0 @@
-import{_ as s,b as t,e as o,i as n}from"./index-LffxJXfs.js";const r={},a={class:"profile-container"};function c(l,e){return n(),t("div",a,e[0]||(e[0]=[o("h1",null,"我的页面",-1),o("p",null,"这里是个人信息功能区域，待实现",-1)]))}const i=s(r,[["render",c],["__scopeId","data-v-84a02993"]]);export{i as default};
