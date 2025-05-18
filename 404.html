@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HerEcho</title>
+  <script type="text/javascript">
+    // 单页应用的GitHub Pages重定向
+    (function() {
+      // 获取当前URL的路径部分
+      var pathSegments = location.pathname.split('/');
+      var repoName = "HerEcho"; // 替换为您的仓库名称
+      var l = window.location;
+      
+      // 确保我们在仓库路径下
+      var isRepoPath = pathSegments.length > 1 && pathSegments[1] === repoName;
+      
+      if (isRepoPath) {
+        // 重定向到主页，但保留原始URL信息在hash中
+        // 这样应用可以在加载后解析并导航到正确的路由
+        var redirectUrl = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '');
+        redirectUrl += '/' + repoName + '/?p=' + encodeURIComponent(
+          pathSegments.slice(2).join('/')
+        );
+        window.location.replace(redirectUrl);
+      } else {
+        // 如果不在仓库路径下，简单地重定向到主页
+        window.location.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/' + repoName + '/');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <h2>正在重定向...</h2>
+</body>
+</html> 

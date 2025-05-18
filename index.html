@@ -9,7 +9,26 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Her Echo - 羌青瓷</title>
-    <script type="module" crossorigin src="/HerEcho/assets/index-C5UnsYty.js"></script>
+    <script type="text/javascript">
+      // 处理从404.html重定向过来的请求
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        
+        // 检查URL参数中是否有路径信息
+        var urlParams = new URLSearchParams(window.location.search);
+        var path = urlParams.get('p');
+        
+        if (path) {
+          // 如果有路径参数，将其转换为正确的路由路径
+          history.replaceState(null, null, '/HerEcho/' + path);
+        } else if (redirect && redirect !== location.href) {
+          // 如果有重定向信息但没有路径参数，使用重定向信息
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/HerEcho/assets/index-CDFdzjpW.js"></script>
     <link rel="stylesheet" crossorigin href="/HerEcho/assets/index-B7pM2LhL.css">
   </head>
   <body>
