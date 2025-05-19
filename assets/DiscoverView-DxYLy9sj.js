@@ -1,0 +1,1 @@
+import{_ as s,c,a as o,o as t}from"./index-X1ALw_sJ.js";const n={},r={class:"discover-container"};function a(_,e){return t(),c("div",r,e[0]||(e[0]=[o("h1",null,"发现页面",-1),o("p",null,"这里是发现功能区域，待实现",-1)]))}const i=s(n,[["render",a],["__scopeId","data-v-d0e04289"]]);export{i as default};
