@@ -9,5 +9,11 @@
   "deploy": {
     "startCommand": "npx serve -s dist",
     "port": 80
+  },
+  "services": {
+    "mongodb": {
+      "type": "mongodb",
+      "version": "latest"
+    }
   }
-} 
+}

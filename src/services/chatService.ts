@@ -3,6 +3,10 @@ import { generatePlayerPrompt, generateAutoReplyPrompt } from './promptService';
 import { systemPromptConfig } from '../config/promptConfig';
 import type { Character } from '../types/character';
 import type { Message } from '../types/chat';
+import DatabaseService from './dbService';
+
+// 初始化数据库服务
+const dbService = DatabaseService.getInstance();
 
 // 从环境变量获取API密钥
 const apiKey = import.meta.env.VITE_DEEPSEEK_API_KEY;
@@ -159,6 +163,21 @@ export async function generateCharacterReply(characterId: string, message: strin
         // 记录当前角色交互次数
         if (retryCount === 0) {
             console.log(`用户与 ${character.name}(${characterId}) 进行了对话`);
+
+            // 记录用户消息到数据库
+            await dbService.logChat({
+                userId: 'user-' + Date.now(), // 这里可以根据实际用户系统修改
+                sessionId: 'session-' + Date.now(),
+                role: character.name,
+                messageType: 'user',
+                inputMethod: 'manual',
+                message: message,
+                round: chatHistory.length,
+                metadata: {
+                    responseTime: 0,
+                    tokensUsed: 0
+                }
+            });
         }
 
         // 检查用户输入是否超过限制
@@ -186,7 +205,24 @@ export async function generateCharacterReply(characterId: string, message: strin
         console.log(`发送请求到DeepSeek API (尝试 ${retryCount + 1}/${MAX_RETRY_ATTEMPTS + 1})`);
 
         // 调用API
+        const startTime = Date.now();
         const aiResponse = await callDeepSeekAPI(chatHistory);
+        const responseTime = Date.now() - startTime;
+
+        // 记录AI回复到数据库
+        await dbService.logChat({
+            userId: 'user-' + Date.now(),
+            sessionId: 'session-' + Date.now(),
+            role: character.name,
+            messageType: 'assistant',
+            inputMethod: 'auto',
+            message: aiResponse,
+            round: chatHistory.length,
+            metadata: {
+                responseTime: responseTime,
+                tokensUsed: Math.ceil(aiResponse.length / 4) // 粗略估计token使用量
+            }
+        });
 
         // 添加回复到历史记录
         chatHistory.push({
@@ -301,7 +337,24 @@ export async function generateAutoReplies(characterId: string, message: string):
             ];
         }
 
-        return response.split('|').map(option => option.trim());
+        const autoReplies = response.split('|').map(option => option.trim());
+
+        // 记录自动回复选项到数据库
+        await dbService.logChat({
+            userId: 'user-' + Date.now(),
+            sessionId: 'session-' + Date.now(),
+            role: character.name,
+            messageType: 'assistant',
+            inputMethod: 'auto',
+            message: JSON.stringify(autoReplies),
+            round: chatHistory.length,
+            metadata: {
+                responseTime: 0,
+                tokensUsed: 0
+            }
+        });
+
+        return autoReplies;
     } catch (error) {
         console.error('生成自动回复选项失败:', error);
         return [
