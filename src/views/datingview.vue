@@ -197,19 +197,13 @@ function handleTouchEnd() {
 }
 
 .card-container {
-  margin-left: 100px;
-  margin-right: 100px;
-  width: 90vw;
-  max-width: 480px;
-  height: 70vh;
-  min-height: 520px;
+  width: 100%;
+  height: calc(100vh - 56px);
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  padding-top: 240px;
+  position: relative;
+  padding: 20px;
   box-sizing: border-box;
   perspective: 1000px;
   perspective-origin: center 50%;
@@ -218,8 +212,8 @@ function handleTouchEnd() {
 
 .card-wrapper {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: min(90vw, 360px);
+  height: min(calc(90vw * 1.6), 576px);
   transform: translateZ(calc(-30px * var(--i))) translateY(calc(-20px * var(--i))) rotate(calc(-4deg * var(--i)));
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;

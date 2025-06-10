@@ -70,14 +70,12 @@ function handleTouchEnd(e: TouchEvent) {
 
 <style scoped>
 .character-card {
-  width: 80vw;
-  max-width: 320px;
-  height: 40vw;
-  max-height: 640px;
+  width: 100%;
+  height: 100%;
   aspect-ratio: 1 / 2;
   background-size: cover;
   background-position: center;
-  border-radius: 32px;
+  border-radius: 24px;
   box-shadow: 0 8px 32px rgba(122, 79, 255, 0.18);
   position: relative;
   display: flex;
@@ -91,7 +89,7 @@ function handleTouchEnd(e: TouchEvent) {
 }
 .overlay {
   width: 100%;
-  padding: 36px 28px 32px 28px;
+  padding: clamp(20px, 5vw, 36px) clamp(16px, 4vw, 28px) clamp(24px, 6vw, 32px) clamp(16px, 4vw, 28px);
   background: linear-gradient(to top, rgba(0,0,0,1) 30%, rgba(0,0,0,0.0) 100%);
   color: #fff;
   position: absolute;
@@ -102,7 +100,7 @@ function handleTouchEnd(e: TouchEvent) {
   align-items: flex-start;
 }
 .name {
-  font-size: 36px;
+  font-size: clamp(24px, 6vw, 36px);
   font-weight: 700;
   margin-bottom: 1px;
   letter-spacing: 1px;
@@ -120,7 +118,7 @@ function handleTouchEnd(e: TouchEvent) {
   margin-bottom: 5px;
 }
 .desc {
-  font-size: 16px;
+  font-size: clamp(14px, 3.5vw, 16px);
   color: #f3eaff;
   margin-bottom: 15px;
   text-align: left;
@@ -130,19 +128,19 @@ function handleTouchEnd(e: TouchEvent) {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 0 30px;
-  gap: 50px;
+  padding: 0 clamp(20px, 5vw, 30px);
+  gap: clamp(30px, 8vw, 50px);
 }
 .btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 80px;
-  padding: 18px 18px;
-  height: 60px;
+  min-width: clamp(60px, 15vw, 80px);
+  padding: clamp(12px, 3vw, 18px);
+  height: clamp(45px, 12vw, 60px);
   border: none;
   border-radius: 22px;
-  font-size: 17px;
+  font-size: clamp(15px, 4vw, 17px);
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
